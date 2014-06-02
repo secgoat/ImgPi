@@ -17,13 +17,13 @@ def imgurDL(imageList):
     """
     DL_LIMIT = 5
     #get the satetime for today
-    folder = datetime.datetime.today()
+    #folder = datetime.datetime.today()
     #turn datetime into string
-    str_folder = str(folder)
+    #str_folder = str(folder)
     #replace illegal characters
-    str_foldername = str_folder.replace(':','.')
+    #str_foldername = str_folder.replace(':','.')
     #make folder based on datetime
-    os.mkdir(str(str_foldername))
+    #os.mkdir(str(str_foldername))
     #iterator coutn for image list
     currentImage = 0;
     for image in imageList:
@@ -35,7 +35,8 @@ def imgurDL(imageList):
             #use response to get the URL
             response = requests.get(url)
             #set the path in which to save the images
-            path = r'./{}/{}'.format(str_foldername,image)
+            path = r'./images/{}'.format(image)
+            # this one saves the path in a datetiem folder  path = r'./{}/{}'.format(str_foldername,image)
             #open folder in 'wb' write binary mode
             fp = open(path, 'wb')
             #write the binary data to the disk
@@ -44,7 +45,7 @@ def imgurDL(imageList):
             fp.close()
             #increase iteratoer
             currentImage += 1
-    print('Finished downloading images to {}'.format(str_foldername))
+    #print('Finished downloading images to {}'.format(str_foldername))
 
 def getImageList(subreddit = 'cyberpunk', sort = 'time', page = 0, window = 'week' ):
     """
@@ -53,7 +54,8 @@ def getImageList(subreddit = 'cyberpunk', sort = 'time', page = 0, window = 'wee
     param subreddit: string - valid Subreddit name. 'pics', 'wtf' etc.
     param sort: string - Time | Top defautls to time
     param page: integer - page number
-    param window: string - change the date range of the request if the sort is "top", day | week | month | year | all, defaults to week
+    param window: string - change the date range of the request if the sort is "top",
+        day | week | month | year | all, defaults to week
     """
 
     imageList = []
