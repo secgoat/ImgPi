@@ -19,12 +19,11 @@ class ImgPiTimer:
         milliseconds = seconds * 1000
         return milliseconds
 
-    def updateTimes(self):
+    def updateTime(self):
         #self.previousTime = self.currentTime
         self.currentTime = pygame.time.get_ticks()
 
     def checkAmountTime(self):
-        self.updateTimes()
         elapsedTime = self.currentTime - self.previousTime
         return elapsedTime
 

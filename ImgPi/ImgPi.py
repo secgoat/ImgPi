@@ -2,10 +2,13 @@ import datetime
 import json
 import requests
 import os
+import ImgPiDisplay
 
 
 #Imgur Client ID
 CLIENT_ID = "efed10c55d16860"
+
+display = ImgPiDisplay.ImgPiDisplay()
 
 def displayImages():
     pass
@@ -93,4 +96,7 @@ def getImageList(subreddit = 'cyberpunk', sort = 'time', page = 0, window = 'wee
      
 
 if __name__ == "__main__":
-    getImageList()
+    #getImageList()
+    while display.running:
+        display.Update()
+        display.Draw()
