@@ -40,6 +40,7 @@ class ImgPiDisplay:
                 if not os.getenv('SDL_VIDEODRIVER'):
                     os.putenv('SDL_VIDEODRIVER', driver)
                 try:
+                    pygame.init()
                     pygame.display.init()
                 except pygame.error:
                     print("Driver {} Failed".format(driver))
