@@ -16,7 +16,8 @@ class ImgPiDisplay:
         #2 variables for displaying my times during debug
         self.timeBlit = None
         self.pastBlit = None
-
+        self.width = None
+        self.height = None
         #check if windows or rPi to init pygame displays
         if os.name == "nt":
             #windows / Development
