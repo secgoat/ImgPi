@@ -96,7 +96,7 @@ def getImageList(subreddit = 'cyberpunk', sort = 'time', page = 0, window = 'wee
      
 
 if __name__ == "__main__":
-    #getImageList()
+    getImageList()
     while display.running:
         display.Update()
         display.Draw()
