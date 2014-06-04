@@ -81,6 +81,7 @@ class ImgPiDisplay:
 
         if elapsedTime >= delayTime:  # need to only update previous time when time interval has actually passed otherwise it will never happen as previous and current wil always be almost identical
             self.timer.previousTime = self.timer.currentTime #set the previous tim interval
+            print("current Time: ", self.timer.currentTime)
             self.image_iterator += 1
             if self.image_iterator > 4:
                 self.image_iterator = 0
