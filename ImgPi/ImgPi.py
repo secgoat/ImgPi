@@ -8,7 +8,8 @@ import ImgPiDisplay
 #Imgur Client ID
 CLIENT_ID = "efed10c55d16860"
 
-display = ImgPiDisplay.ImgPiDisplay()
+display = None #placeholder, apparenty this runs instead of main first, wtf?
+
 
 def displayImages():
     pass
@@ -35,7 +36,7 @@ def imgurDL(imageList):
 
     #there has to be a better way than manual iterators
     currentImage = 0;
-    
+
     for image in imageList:
         if currentImage < DL_LIMIT:
             #recreate the url we pulled apart in the getImageList() function.
@@ -104,6 +105,7 @@ def getImageList(subreddit = 'cyberpunk', sort = 'time', page = 0, window = 'wee
 
 if __name__ == "__main__":
     getImageList()
+    display = ImgPiDisplay.ImgPiDisplay()
     while display.running:
         display.Update()
         display.Draw()
