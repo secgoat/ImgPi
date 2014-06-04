@@ -64,7 +64,10 @@ class ImgPiDisplay:
         self.imgur_images = os.listdir('./images/') #get all images in the images directory
         for img in self.imgur_images:
             #read all images in the directory and load them into pygame
-            self.pygame_images.append(pygame.image.load(os.path.join('images', img)))
+            new_img = pygame.image.load(os.path.join('images', img))
+            scale_img = pygame.transform.scale(new_img, (pygame.display.Info().current_w, pygame.display.Info().current_h))
+            self.pygame_images.append(scale_img)
+            #self.pygame_images.append(pygame.image.load(os.path.join('images', img)))
 
 
     def Update(self):
@@ -83,7 +86,7 @@ class ImgPiDisplay:
             self.timer.previousTime = self.timer.currentTime #set the previous tim interval
             print("current Time: ", self.timer.currentTime)
             self.image_iterator += 1
-            print(self.pygame_images[self.image_iterator])
+
             if self.image_iterator > 4:
                 self.image_iterator = 0
 
