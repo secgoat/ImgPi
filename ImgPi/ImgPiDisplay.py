@@ -37,7 +37,7 @@ class ImgPiDisplay:
             found = False
             for driver in drivers:
                 # Make sure that SDL_VIDEODRIVER is set
-                if not os.getenc('DSL_VIDEODRIVER'):
+                if not os.getenv('SDL_VIDEODRIVER'):
                     os.putenv('SDL_VIDEODRIVER', driver)
                 try:
                     pygame.display.init()
