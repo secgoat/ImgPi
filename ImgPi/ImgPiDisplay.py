@@ -83,6 +83,7 @@ class ImgPiDisplay:
             self.timer.previousTime = self.timer.currentTime #set the previous tim interval
             print("current Time: ", self.timer.currentTime)
             self.image_iterator += 1
+            print(self.pygame_images[self.image_iterator])
             if self.image_iterator > 4:
                 self.image_iterator = 0
 
