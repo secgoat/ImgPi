@@ -28,7 +28,14 @@ def imgurDL(imageList):
     #make folder based on datetime
     #os.mkdir(str(str_foldername))
     #iterator coutn for image list
+
+    #check for images folder if it doesn't exist make it
+    if not os.path.exists('images'):
+        os.mkdir('images')
+
+    #there has to be a better way than manual iterators
     currentImage = 0;
+    
     for image in imageList:
         if currentImage < DL_LIMIT:
             #recreate the url we pulled apart in the getImageList() function.
