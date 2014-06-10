@@ -65,7 +65,7 @@ class ImgPiDisplay:
         self.imgur_images = os.listdir('./images/') #get all images in the images directory
         for img in self.imgur_images:
             #read all images in the directory and load them into pygame
-            new_img = pygame.image.load(os.path.join('images', img))
+            new_img = pygame.image.load(os.path.join('images', img)).convert()
             scale_img = pygame.transform.scale(new_img, (pygame.display.Info().current_w, pygame.display.Info().current_h))
             self.pygame_images.append(scale_img)
             #self.pygame_images.append(pygame.image.load(os.path.join('images', img)))
@@ -97,7 +97,11 @@ class ImgPiDisplay:
         pyImgRect = self.pygame_images[self.image_iterator].get_rect()
         self.screen.blit(self.pygame_images[self.image_iterator], pyImgRect)
         self.screen.blit(self.timeBlit, (0,0))
-        self.screen.blit(self.pastBlit, (400,0))
+        #Bam font.siz to get the size of the font
+        text_w = self.font.size("past Time: " + str(self.timer.previousTime / 1000))[0]
+        #get the screen width so we know where ot place the text.
+        screen_w = pygame.display.Info().current_w
+        self.screen.blit(self.pastBlit, (screen_w - text_w,0))
         pygame.display.flip()
 
 '''

@@ -32,9 +32,12 @@ class ImgPi:
 
         #send the client id to the imgur API to get anopnymous access to the site.
         header = {"Content-Type": "text", "Authorization": "Client-ID " + ImgPi.CLIENT_ID}
+
         #compile the request along with ID headers
         #https://api.imgur.com/3/gallery/r/cyberpunk/top/all/0
-        r = requests.get('https://api.imgur.com/3/gallery/r/{}/{}/{}/{}'.format(subreddit,sort,window,page), headers=header)
+        r = requests.get('https://api.imgur.com/3/gallery/r/{}/{}/{}/{}'
+                         .format(subreddit,sort,window,page), headers=header)
+
         #read the text of the respomse
         j = json.loads(r.text)
 
@@ -197,8 +200,8 @@ def getImageList(subreddit = 'cyberpunk', sort = 'time', page = 0, window = 'wee
 
 if __name__ == "__main__":
     imgpi = ImgPi()
-    imgpi.GetImageListFromImgur()
-    imgpi.DownloadFromImgur()
+    #imgpi.GetImageListFromImgur()
+    #imgpi.DownloadFromImgur()
     imgpi.display = ImgPiDisplay.ImgPiDisplay()
     #getImageList()
     #display = ImgPiDisplay.ImgPiDisplay()
