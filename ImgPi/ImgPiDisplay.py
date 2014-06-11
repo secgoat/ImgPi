@@ -18,6 +18,9 @@ class ImgPiDisplay:
         self.pastBlit = None
         self.width = None
         self.height = None
+        #shoudl be safe to pygame init again since we already have the screen?
+        pygame.init()
+        '''
         #check if windows or rPi to init pygame displays
         if os.name == "nt":
             #windows / Development
@@ -55,13 +58,13 @@ class ImgPiDisplay:
             size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
             print("Framebuffer size is %d x %d" % (size[0], size[1]))
             self.screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
-
+        '''
 
         self.LoadContent()
 
 
     def LoadContent(self):
-        self.font = pygame.font.Font('./font/Alpaca54.ttf', 20) #load a font to use for debugging or siplay on screen
+        self.font = pygame.font.Font('./font/Alpaca54.ttf', 20) #load a font to use for debugging or display on screen
         self.imgur_images = os.listdir('./images/') #get all images in the images directory
         for img in self.imgur_images:
             #read all images in the directory and load them into pygame
@@ -71,7 +74,7 @@ class ImgPiDisplay:
             #self.pygame_images.append(pygame.image.load(os.path.join('images', img)))
 
 
-    def Update(self):
+    def Update(self, time):
         self.timer.updateTime() #update current time interval
         elapsedTime = self.timer.checkAmountTime()
         delayTime = self.timer.convertSecToMs(5)
@@ -92,13 +95,13 @@ class ImgPiDisplay:
                 self.image_iterator = 0
 
 
-    def Draw(self):
-        self.screen.fill((0,0,0))
+    def Draw(self, screen, font):
+        screen.fill((0,0,0))
         pyImgRect = self.pygame_images[self.image_iterator].get_rect()
-        self.screen.blit(self.pygame_images[self.image_iterator], pyImgRect)
-        self.screen.blit(self.timeBlit, (0,0))
+        screen.blit(self.pygame_images[self.image_iterator], pyImgRect)
+        screen.blit(self.timeBlit, (0,0))
         #Bam font.siz to get the size of the font
-        text_w = self.font.size("past Time: " + str(self.timer.previousTime / 1000))[0]
+        text_w = font.size("past Time: " + str(self.timer.previousTime / 1000))[0]
         #get the screen width so we know where ot place the text.
         screen_w = pygame.display.Info().current_w
-        self.screen.blit(self.pastBlit, (screen_w - text_w,0))
+        screen.blit(self.pastBlit, (screen_w - text_w,0))
