@@ -7,7 +7,7 @@ class ImgPiDisplay:
 
     def __init__(self):
         self.timer = ImgPiTimer.ImgPiTimer()
-        self.screen = None  # placeholder for the screen variable as it will be different based on windows or rPi
+        self.screen = None#screen  # placeholder for the screen variable as it will be different based on windows or rPi
         self.running = True  #bool to keep track of program state, however this may need ot be moved up to imgpi.py (main)
         self.imgur_images = [] #list of images file names from the directory
         self.pygame_images = [] #list of rendered pygame images form the image files
@@ -19,7 +19,7 @@ class ImgPiDisplay:
         self.width = None
         self.height = None
         #shoudl be safe to pygame init again since we already have the screen?
-        pygame.init()
+        #pygame.init()
         '''
         #check if windows or rPi to init pygame displays
         if os.name == "nt":
@@ -95,13 +95,13 @@ class ImgPiDisplay:
                 self.image_iterator = 0
 
 
-    def Draw(self, screen, font):
+    def Draw(self, screen):
         screen.fill((0,0,0))
         pyImgRect = self.pygame_images[self.image_iterator].get_rect()
         screen.blit(self.pygame_images[self.image_iterator], pyImgRect)
         screen.blit(self.timeBlit, (0,0))
-        #Bam font.siz to get the size of the font
-        text_w = font.size("past Time: " + str(self.timer.previousTime / 1000))[0]
+        #Bam font.size to get the size of the font
+        text_w = self.font.size("past Time: " + str(self.timer.previousTime / 1000))[0]
         #get the screen width so we know where ot place the text.
         screen_w = pygame.display.Info().current_w
         screen.blit(self.pastBlit, (screen_w - text_w,0))

@@ -3,6 +3,7 @@ import os
 import pygame
 
 import ImgPiDisplay
+import ImgPiMenu
 import Imgur
 import DeviantArt
 
@@ -17,13 +18,13 @@ class ImgPi:
         self.timer = None # will be ImgPiTimer object
         self.running = True # this wil be used for later to stop th eloop possible and kill the program
 
-        self.mainState = ImgPiDisplay.ImgPiDisplay()
+        self.mainState = None#ImgPiDisplay.ImgPiDisplay()
         self.imgur = Imgur.Imgur()
         self.deviant = DeviantArt.DeviantArt()
 
         #make gamestate objects so we can set each one to active inactive etc.
-        self.states = {'Main': None, 'Menu': None} #dict to hold the different gamestate objects
-        self.activeState = None #use this to keep track of which state is currently th active and being updated one
+        self.state = {'Active': None, 'Main': None, 'Menu': None} #dict to hold the different gamestate objects
+        #self.activeState = None #use this to keep track of which state is currently th active and being updated one
 
 
         #check for images folder if it doesn't exist make it
@@ -36,9 +37,7 @@ class ImgPi:
             if not os.path.exists('deviantart'):
                 os.mkdir('deviantart')
             '''
-
-    def init_pygame(self):
-
+        #Check for os name and initialize Pygame accordingly
         if os.name == "nt":
             #windows / Development
             pygame.init()
@@ -62,7 +61,7 @@ class ImgPi:
                     os.putenv('SDL_VIDEODRIVER', driver)
                 try:
                     pygame.init()
-                    pygame.display.init()
+                    #pygame.display.init()
                 except pygame.error:
                     print("Driver {} Failed".format(driver))
                     continue
@@ -76,6 +75,10 @@ class ImgPi:
             print("Framebuffer size is %d x %d" % (size[0], size[1]))
             self.screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
 
+        #now that pygame and display are initialized initiliaze the states and fonts etc.
+        self.state['Main'] = ImgPiDisplay.ImgPiDisplay()
+        self.state['Menu'] = ImgPiMenu.ImgPiMenu() # add a menu constructor here
+        self.state['Active'] = self.state['Menu']
         #self.font = pygame.font.Font('./font/Alpaca54.ttf', 20) #load a font to use for debugging or display on screen
 
     def downloadImages(self):
@@ -84,24 +87,27 @@ class ImgPi:
         self.deviant.getRSS()
         self.deviant.downloadRSSContent()
 
-    def Update(self, screen):
+    def Update(self, activeState):
         time = None
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    self.running = False
                     pygame.quit()
+                if event.key == pygame.K_SPACE:
+                    self.state['Active'] = self.state['Menu']
 
-        screen.Update(time)
-        screen.Draw(self.screen)
+        activeState.Update(time)
+        activeState.Draw(self.screen)
         pygame.display.flip()
 
 
 
 if __name__ == "__main__":
     imgpi = ImgPi()
-    imgpi.init_pygame()
+    #imgpi.downloadImages()
     #imgpi.screen = ImgPiDisplay.ImgPiDisplay()
     while imgpi.running:
-        imgpi.Update(imgpi.mainState)
+        imgpi.Update(imgpi.state['Active'])
 
