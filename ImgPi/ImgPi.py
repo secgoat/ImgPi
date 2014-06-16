@@ -4,6 +4,7 @@ import pygame
 
 import ImgPiDisplay
 import ImgPiMenu
+import ImgPiTimer
 import Imgur
 import DeviantArt
 
@@ -78,7 +79,9 @@ class ImgPi:
         #now that pygame and display are initialized initiliaze the states and fonts etc.
         self.state['Main'] = ImgPiDisplay.ImgPiDisplay()
         self.state['Menu'] = ImgPiMenu.ImgPiMenu() # add a menu constructor here
-        self.state['Active'] = self.state['Menu']
+        self.state['Active'] = self.state['Main']
+
+        self.timer = ImgPiTimer.ImgPiTimer()
         #self.font = pygame.font.Font('./font/Alpaca54.ttf', 20) #load a font to use for debugging or display on screen
 
     def downloadImages(self):
@@ -96,7 +99,10 @@ class ImgPi:
                     self.running = False
                     pygame.quit()
                 if event.key == pygame.K_SPACE:
-                    self.state['Active'] = self.state['Menu']
+                    if not self.state['Active'] == self.state['Menu']:
+                        self.state['Active'] = self.state['Menu']
+                    else:
+                        self.state['Active'] = self.state['Main']
 
         activeState.Update(time)
         activeState.Draw(self.screen)
@@ -106,6 +112,7 @@ class ImgPi:
 
 if __name__ == "__main__":
     imgpi = ImgPi()
+    imgpi.timer.clock.tick(50)
     #imgpi.downloadImages()
     #imgpi.screen = ImgPiDisplay.ImgPiDisplay()
     while imgpi.running:
