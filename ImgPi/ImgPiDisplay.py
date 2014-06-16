@@ -18,47 +18,6 @@ class ImgPiDisplay:
         self.pastBlit = None
         self.width = None
         self.height = None
-        #shoudl be safe to pygame init again since we already have the screen?
-        #pygame.init()
-        '''
-        #check if windows or rPi to init pygame displays
-        if os.name == "nt":
-            #windows / Development
-            pygame.init()
-            self.screen = pygame.display.set_mode((640,400))
-        else:
-            #rPi / live "posix"
-            #https://learn.adafruit.com/pi-video-output-using-pygame/pointing-pygame-to-the-framebuffer
-
-            # Based on "Python GUI in Linux frame buffer"
-            # http://www.karoltomala.com/blog/?p=679
-            disp_no = os.getenv("DISPLAY")
-            if disp_no:
-                print("I'm running under X display = {}".format(disp_no))
-            # Check which frame buffer drivers are available
-            # Start with fbcon since directfb hangs with composite output
-            drivers = ['fbcon', 'directfb', 'svgalib']
-            found = False
-            for driver in drivers:
-                # Make sure that SDL_VIDEODRIVER is set
-                if not os.getenv('SDL_VIDEODRIVER'):
-                    os.putenv('SDL_VIDEODRIVER', driver)
-                try:
-                    pygame.init()
-                    pygame.display.init()
-                except pygame.error:
-                    print("Driver {} Failed".format(driver))
-                    continue
-                found = True
-                break
-
-            if not found:
-                raise Exception("no suitable driver found")
-
-            size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
-            print("Framebuffer size is %d x %d" % (size[0], size[1]))
-            self.screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
-        '''
 
         self.LoadContent()
 

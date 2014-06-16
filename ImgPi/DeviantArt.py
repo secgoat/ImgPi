@@ -36,7 +36,7 @@ class DeviantArt:
         param imageList: list of http strings
         used to download images locally
         """
-        DL_LIMIT = 5 #change or remove this when goign live to get max number of pics
+        DL_LIMIT = len(self.imageList)#5 #change or remove this when goign live to get max number of pics
 
         #there has to be a better way than manual iterators
         currentImage = 0;

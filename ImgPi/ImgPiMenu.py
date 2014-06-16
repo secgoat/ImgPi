@@ -45,16 +45,12 @@ class ImgPiMenu:
         self.items = menuItems
         self.renderedItems = [] #placeholder for the font renderend strings plus pos etc.
         self.PrepareMenuItems()
-        #for item in menuItems:
-        #    self.items.append(self.font.render(item, 1, self.fontColor))
+
 
     def PrepareMenuItems(self):
         for index, item in enumerate(self.items):
             menuItem = ImgPiMenuItem(item)
 
-            #label = self.font.render(item, 1, self.fontColor)
-            #width = label.get_rect().width
-            #height = label.get_rect().height
             screen_w = pygame.display.Info().current_w
             screen_h = pygame.display.Info().current_h
             posx = (screen_w / 2) - (menuItem.width / 2)
@@ -76,7 +72,7 @@ class ImgPiMenu:
         screen.fill((0,0,0))
         for item in self.renderedItems:
             screen.blit(item.label, item.position)
-     
+
 
 
 

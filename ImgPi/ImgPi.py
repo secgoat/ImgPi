@@ -1,5 +1,4 @@
 import os
-
 import pygame
 
 import ImgPiDisplay
@@ -113,8 +112,8 @@ class ImgPi:
 if __name__ == "__main__":
     imgpi = ImgPi()
     imgpi.timer.clock.tick(50)
-    #imgpi.downloadImages()
-    #imgpi.screen = ImgPiDisplay.ImgPiDisplay()
+    imgpi.downloadImages()
+
     while imgpi.running:
         imgpi.Update(imgpi.state['Active'])
 
