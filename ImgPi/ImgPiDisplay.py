@@ -33,7 +33,7 @@ class ImgPiDisplay:
             #self.pygame_images.append(pygame.image.load(os.path.join('images', img)))
 
 
-    def Update(self, time):
+    def Update(self, time, key):
         self.timer.updateTime() #update current time interval
         elapsedTime = self.timer.checkAmountTime()
         delayTime = self.timer.convertSecToMs(5)

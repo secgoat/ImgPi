@@ -89,22 +89,24 @@ class ImgPi:
         self.deviant.getRSS()
         self.deviant.downloadRSSContent()
 
-    def Update(self, activeState):
+    def Update(self):
         time = None
+        key = None #send the key pressed to the menu or other states
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.KEYDOWN:
+                key = event.key
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
                     pygame.quit()
-                if event.key == pygame.K_SPACE:
+                elif event.key == pygame.K_SPACE:
                     if not self.state['Active'] == self.state['Menu']:
                         self.state['Active'] = self.state['Menu']
                     else:
                         self.state['Active'] = self.state['Main']
 
-        activeState.Update(time)
-        activeState.Draw(self.screen)
+        self.state['Active'].Update(time, key)
+        self.state['Active'].Draw(self.screen)
         pygame.display.flip()
 
 
@@ -112,8 +114,8 @@ class ImgPi:
 if __name__ == "__main__":
     imgpi = ImgPi()
     imgpi.timer.clock.tick(50)
-    imgpi.downloadImages()
+    #imgpi.downloadImages()
 
     while imgpi.running:
-        imgpi.Update(imgpi.state['Active'])
+        imgpi.Update()
 
