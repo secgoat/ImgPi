@@ -6,10 +6,11 @@ import ImgPiMenu
 import ImgPiTimer
 import Imgur
 import DeviantArt
+import Observer
 
 
 
-class ImgPi:
+class ImgPi():
 
     def __init__(self):
         self.screen = None # placeholder will be a pygame display object
@@ -26,6 +27,7 @@ class ImgPi:
         self.state = {'Active': None, 'Main': None, 'Menu': None} #dict to hold the different gamestate objects
         #self.activeState = None #use this to keep track of which state is currently th active and being updated one
 
+        #self.menuHandler = None #Observer.Observer()
 
         #check for images folder if it doesn't exist make it
         if not os.path.exists('images'):
@@ -79,17 +81,31 @@ class ImgPi:
         self.state['Main'] = ImgPiDisplay.ImgPiDisplay()
         self.state['Menu'] = ImgPiMenu.ImgPiMenu() # add a menu constructor here
         self.state['Active'] = self.state['Main']
-
+        self.AddObservable(self.state['Menu'].menu_action)
+        #self.menuHandler = Observer.Observer(self.state['Menu'].menu_action)
+        #self.menuHandler = MenuHandler(self.state['Menu'].menu_action)
         self.timer = ImgPiTimer.ImgPiTimer()
         #self.font = pygame.font.Font('./font/Alpaca54.ttf', 20) #load a font to use for debugging or display on screen
 
+    #add the observer methods
+    def AddObservable(self, observable):
+        observable.addObserver(self)
+
+    def update(self, observable, *args, **kwargs):
+        if 'Continue' in args:
+            self.state['Active'] = self.state['Main']
+        if 'Quit' in args:
+             pygame.quit()
+             self.running = False
+
+    #add other methods
     def downloadImages(self):
         self.imgur.getSubredditGallery()
         self.imgur.downloadFromImgur()
         self.deviant.getRSS()
         self.deviant.downloadRSSContent()
 
-    def Update(self):
+    def MainLoop(self):
         time = None
         key = None #send the key pressed to the menu or other states
         events = pygame.event.get()
@@ -97,8 +113,8 @@ class ImgPi:
             if event.type == pygame.KEYDOWN:
                 key = event.key
                 if event.key == pygame.K_ESCAPE:
-                    self.running = False
                     pygame.quit()
+                    self.running = False
                 elif event.key == pygame.K_SPACE:
                     if not self.state['Active'] == self.state['Menu']:
                         self.state['Active'] = self.state['Menu']
@@ -110,6 +126,14 @@ class ImgPi:
         pygame.display.flip()
 
 
+class MenuHandler():
+
+    def __init__(self, observable):
+        observable.addObserver(self)
+
+    def update(self, observable, *args, **kwargs):
+        if 'Continue' in args:
+            imgpi.mainState = imgpi.mainState['Main']
 
 if __name__ == "__main__":
     imgpi = ImgPi()
@@ -117,5 +141,5 @@ if __name__ == "__main__":
     #imgpi.downloadImages()
 
     while imgpi.running:
-        imgpi.Update()
+        imgpi.MainLoop()
 

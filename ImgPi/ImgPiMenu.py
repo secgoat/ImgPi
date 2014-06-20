@@ -1,9 +1,11 @@
 import pygame
-
+import Observable
 
 class ImgPiMenuItem():
 
     def __init__(self, text, font= None, fontSize= 20, fontColor = (255,255,255), posx = 0, posy= 0):
+
+
         self.text = text
         self.font = pygame.font.Font('./font/Alpaca54.ttf', 20)
         self.fontSize = fontSize
@@ -39,6 +41,8 @@ class ImgPiMenu:
     #http://nebelprog.wordpress.com/2013/08/14/create-a-simple-game-menu-with-pygame-pt-1-writing-the-menu-options-to-the-screen/
 
     def __init__(self, menuItems = ("Continue", "Quit"), fontColor = (255,255,255), selectedColor = (255,0,0)):
+
+        self.menu_action = Observable.Observable()
         self.fontColor = fontColor
         self.selectedColor = selectedColor
         self.mouseVisible = True
@@ -84,6 +88,11 @@ class ImgPiMenu:
         if self.curItem is None:
             self.curItem = 0
         else:
+            #send a click signal first and return the current menu item to the listener(observer)
+            if key == pygame.K_RETURN:
+                #if self.curItem == 0:
+                self.menu_action.notify(self.menuItems[self.curItem].text)
+
             #find the chosen item
             if key == pygame.K_UP and self.curItem > 0:
                 self.curItem -= 1
@@ -99,9 +108,11 @@ class ImgPiMenu:
 
 
     def Update(self, time, key):
+
         position = pygame.mouse.get_pos()
 
         if key is not None:
+
             self.mouseVisible = False
             self.SetItemSelection(key)
 
@@ -121,7 +132,11 @@ class ImgPiMenu:
         screen.fill((0,0,0))
         for item in self.menuItems:
             screen.blit(item.label, item.position)
+'''
+class MenuAction(Observable):
 
+    def __init__(self):
+        super().__init__(self)
 
-
+'''
 
