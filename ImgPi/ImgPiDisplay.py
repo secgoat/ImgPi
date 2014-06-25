@@ -12,8 +12,6 @@ class ImgPiDisplay:
         self.running = True  #bool to keep track of program state, however this may need ot be moved up to imgpi.py (main)
         self.raw_images = [] #list of images file names from the directory
         self.current_image = None # keep one image that has been converted and scaled for pygame display
-        self.pygame_images = [] #list of rendered pygame images form the image files
-        self.image_iterator = 0 #use this to load different images from the pygame_image list
         self.font = None  #placeholder for pygamefont
         #2 variables for displaying my times during debug
         self.timeBlit = None
@@ -27,19 +25,10 @@ class ImgPiDisplay:
     def load_content(self):
         self.font = pygame.font.Font('./font/Alpaca54.ttf', 20) #load a font to use for debugging or display on screen
         self.raw_images = os.listdir('./images/') #get all images in the images directory
-
+        #convert oen image and load it into current_image to avoid crashes on None type
         rand_img_num = random.randint(0, len(self.raw_images))
         self.convert_image(self.raw_images[rand_img_num])
-        '''need to move the following to a new method, so we only convert 1 image at atime when needed, otherwise
-        there is a terrible delay on start up
 
-        for img in self.imgur_images:
-            #read all images in the directory and load them into pygame
-            new_img = pygame.image.load(os.path.join('images', img)).convert()
-            scale_img = pygame.transform.scale(new_img, (pygame.display.Info().current_w, pygame.display.Info().current_h))
-            self.pygame_images.append(scale_img)
-            #self.pygame_images.append(pygame.image.load(os.path.join('images', img)))
-        '''
 
     def convert_image(self, image):
         new_img = pygame.image.load(os.path.join('images', image)).convert()
@@ -63,10 +52,6 @@ class ImgPiDisplay:
             print("current Time: ", self.timer.currentTime)
             rand_img_num = random.randint(0, len(self.raw_images))
             self.convert_image(self.raw_images[rand_img_num])
-            #self.image_iterator += 1
-
-            #if self.image_iterator > len(self.raw_images):
-            #    self.image_iterator = 0
 
 
     def draw(self, screen):
