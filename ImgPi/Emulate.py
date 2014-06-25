@@ -23,7 +23,8 @@ class NES:
         for element in table:
             links = element.find_all('a')
             for a in links:
-                print(a.get('href'))
+                #print(a.text) gives me just the title
+                print(a.get('href')) #gives me the actuallink
                 r2 = requests.get("http://www.nesfiles.com/{}".format(a.get('href')))
                 data2 = r2.text
                 soup2 = BeautifulSoup(data2)

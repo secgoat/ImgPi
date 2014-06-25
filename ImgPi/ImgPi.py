@@ -32,6 +32,7 @@ class ImgPi():
         #check for images folder if it doesn't exist make it
         if not os.path.exists('images'):
             os.mkdir('images')
+
             '''
             os.chdir('images')
             if not os.path.exists('imgur'):
