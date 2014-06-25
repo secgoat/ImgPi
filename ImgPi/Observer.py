@@ -1,7 +1,7 @@
 class Observer(object):
 
   def __init__(self, observable):
-    observable.addObserver(self)
+    observable.add_observer(self)
 
   def update(self, observable, *args, **kwargs):
     print('Got', args, kwargs, 'From', observable)

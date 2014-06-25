@@ -81,15 +81,15 @@ class ImgPi():
         self.state['Main'] = ImgPiDisplay.ImgPiDisplay()
         self.state['Menu'] = ImgPiMenu.ImgPiMenu() # add a menu constructor here
         self.state['Active'] = self.state['Main']
-        self.AddObservable(self.state['Menu'].menu_action)
+        self.add_observable(self.state['Menu'].menu_action)
         #self.menuHandler = Observer.Observer(self.state['Menu'].menu_action)
         #self.menuHandler = MenuHandler(self.state['Menu'].menu_action)
         self.timer = ImgPiTimer.ImgPiTimer()
         #self.font = pygame.font.Font('./font/Alpaca54.ttf', 20) #load a font to use for debugging or display on screen
 
     #add the observer methods
-    def AddObservable(self, observable):
-        observable.addObserver(self)
+    def add_observable(self, observable):
+        observable.add_observer(self)
 
     def update(self, observable, *args, **kwargs):
         if 'Continue' in args:
@@ -99,13 +99,13 @@ class ImgPi():
              self.running = False
 
     #add other methods
-    def downloadImages(self):
-        self.imgur.getSubredditGallery()
-        self.imgur.downloadFromImgur()
-        self.deviant.getRSS()
-        self.deviant.downloadRSSContent()
+    def download_images(self):
+        self.imgur.get_subreddit_gallery()
+        self.imgur.download_from_imgur()
+        self.deviant.get_rss()
+        self.deviant.download_rss_content()
 
-    def MainLoop(self):
+    def main_loop(self):
         time = None
         key = None #send the key pressed to the menu or other states
         events = pygame.event.get()
@@ -121,15 +121,15 @@ class ImgPi():
                     else:
                         self.state['Active'] = self.state['Main']
 
-        self.state['Active'].Update(time, key)
-        self.state['Active'].Draw(self.screen)
+        self.state['Active'].update(time, key)
+        self.state['Active'].draw(self.screen)
         pygame.display.flip()
 
 
 class MenuHandler():
 
     def __init__(self, observable):
-        observable.addObserver(self)
+        observable.add_observer(self)
 
     def update(self, observable, *args, **kwargs):
         if 'Continue' in args:
@@ -141,5 +141,5 @@ if __name__ == "__main__":
     #imgpi.downloadImages()
 
     while imgpi.running:
-        imgpi.MainLoop()
+        imgpi.main_loop()
 

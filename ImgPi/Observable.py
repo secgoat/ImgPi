@@ -3,7 +3,7 @@ class Observable(object):
   def __init__(self):
     self.__observers = []
 
-  def addObserver(self, obs):
+  def add_observer(self, obs):
     self.__observers.append(obs)
 
   def notify(self, *args, **kwargs):

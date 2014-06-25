@@ -10,7 +10,7 @@ class Imgur:
         self.subredditImageList = []
 
 
-    def getSubredditGallery(self, subreddit='cyberpunk', sort='time', page=0, window='day'):
+    def get_subreddit_gallery(self, subreddit='cyberpunk', sort='time', page=0, window='day'):
         """
         Return an image list from a page on a subreddit gallery.
 
@@ -37,7 +37,6 @@ class Imgur:
         #print the keys for the dict that is our response
         for key in j:
             print(key)
-        #now print what?  fuck if i knwo btu it prints the damn image link
         count = 0
         for image in j[u'data']:
             print(image['link'])
@@ -48,10 +47,9 @@ class Imgur:
             #print(imgName)
             self.subredditImageList.append(imgURL)
             count += 1
-
         print("total links returned: " + str(count))
 
-    def downloadFromImgur(self):
+    def download_from_imgur(self):
         """
         param imageList: list of http strings
         used to download images locally
@@ -71,7 +69,7 @@ class Imgur:
                 #use response to get the URL
                 response = requests.get(url)
                 #set the path in which to save the images
-                imgName = self.parseImageURL(url)
+                imgName = self.parse_image_url(url)
                 path = r'./images/{}'.format(imgName)
                 #open folder in 'wb' write binary mode
                 fp = open(path, 'wb')
@@ -82,7 +80,7 @@ class Imgur:
                 #increase iteratoer
                 currentImage += 1
 
-    def parseImageURL(self, imgURL):
+    def parse_image_url(self, imgURL):
         #find the l;ast \ in the url to strip out the image name
         imgIndex = imgURL.rfind('/')
         imgName = imgURL[imgIndex+1:]
@@ -92,7 +90,7 @@ class Imgur:
 
 if __name__ == "__main__":
     img = Imgur()
-    img.getSubredditGallery()
-    img.downloadFromImgur()
+    img.get_subreddit_gallery()
+    img.download_from_imgur()
 
 

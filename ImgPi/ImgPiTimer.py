@@ -11,19 +11,19 @@ class ImgPiTimer:
         self.currentTime = pygame.time.get_ticks()  # this and previousTime will be used to keep track of how much time has passed
         self.previousTime = pygame.time.get_ticks() #init both to current time as we haven't made nay changes ot time yet
 
-    def convertMsToSec(self, milliseconds):
+    def convert_ms_sec(self, milliseconds):
         seconds = milliseconds / 1000
         return seconds
 
-    def convertSecToMs(self, seconds):
+    def convert_sec_ms(self, seconds):
         milliseconds = seconds * 1000
         return milliseconds
 
-    def updateTime(self):
+    def update_time(self):
         #self.previousTime = self.currentTime
         self.currentTime = pygame.time.get_ticks()
 
-    def checkAmountTime(self):
+    def check_amount_time(self):
         elapsedTime = self.currentTime - self.previousTime
         return elapsedTime
 

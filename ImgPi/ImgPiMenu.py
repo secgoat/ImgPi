@@ -18,16 +18,16 @@ class ImgPiMenuItem():
         self.posy = posy
         self.position = posx, posy
 
-    def SetPOS(self, x, y):
+    def set_pos(self, x, y):
         self.position = (x,y)
         self.posx = x
         self.posy = y
 
-    def setFontColor(self, rgb):
+    def set_font_color(self, rgb):
         self.fontColor = rgb
         self.label = self.font.render(self.text, 1, self.fontColor)
 
-    def IsMouseSelection(self,position):
+    def is_mouse_selection(self,position):
         posx = position[0]
         posy = position[1]
         if (posx >= self.posx and posx <= self.posx + self.width) and \
@@ -50,10 +50,10 @@ class ImgPiMenu:
         self.items = menuItems
         self.menuItems = [] #placeholder for the font renderend strings plus pos etc.
         self.curItem = None #keep track of which menu Item is selected
-        self.PrepareMenuItems()
+        self.prepare_menu_items()
 
 
-    def PrepareMenuItems(self):
+    def prepare_menu_items(self):
         for index, item in enumerate(self.items):
             menuItem = ImgPiMenuItem(item)
 
@@ -63,27 +63,27 @@ class ImgPiMenu:
             #t_h total height of text block
             t_h = len(self.items) * menuItem.height
             posy = (screen_h / 2) - (t_h / 2) + (index * menuItem.height)
-            menuItem.SetPOS(posx, posy)
+            menuItem.set_pos(posx, posy)
             self.menuItems.append(menuItem)
 
-    def SetMouseVisibility(self):
+    def set_mouse_visibility(self):
         if self.mouseVisible:
             pygame.mouse.set_visible(True)
         else:
             pygame.mouse.set_visible(False)
 
-    def SetMouseSelection(self, item, mousePOS):
+    def set_mouse_selection(self, item, mousePOS):
         """Marks the menu item the mouse is hovering on"""
-        if item.IsMouseSelection(mousePOS):
-            item.setFontColor(self.selectedColor)
+        if item.is_mouse_selection(mousePOS):
+            item.set_font_color(self.selectedColor)
         else:
-            item.setFontColor(self.fontColor)
+            item.set_font_color(self.fontColor)
 
-    def SetItemSelection(self, key):
+    def set_item_selection(self, key):
         """marks menu item chooses by keyboard"""
         #reset all menu items to default state
         for item in self.menuItems:
-            item.setFontColor(self.fontColor)
+            item.set_font_color(self.fontColor)
 
         if self.curItem is None:
             self.curItem = 0
@@ -103,32 +103,32 @@ class ImgPiMenu:
             elif key == pygame.K_DOWN and self.curItem == len(self.menuItems) -1:
                 self.curItem = 0
 
-        self.menuItems[self.curItem].setFontColor(self.selectedColor)
+        self.menuItems[self.curItem].set_font_color(self.selectedColor)
 
 
 
-    def Update(self, time, key):
+    def update(self, time, key):
 
         position = pygame.mouse.get_pos()
 
         if key is not None:
 
             self.mouseVisible = False
-            self.SetItemSelection(key)
+            self.set_item_selection(key)
 
         if pygame.mouse.get_rel() != (0,0):
             self.mouseVisible = True
             self.curItem = None
 
-        self.SetMouseVisibility()
+        self.set_mouse_visibility()
 
         for item in self.menuItems:
             if self.mouseVisible:
                 mousePOS = pygame.mouse.get_pos()
-                self.SetMouseSelection(item, mousePOS)
+                self.set_mouse_selection(item, mousePOS)
 
 
-    def Draw(self, screen):
+    def draw(self, screen):
         screen.fill((0,0,0))
         for item in self.menuItems:
             screen.blit(item.label, item.position)

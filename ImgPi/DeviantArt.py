@@ -10,7 +10,7 @@ class DeviantArt:
         self.imageList = [] #parse the sml and put the image links in here
 
 
-    def getRSS(self):
+    def get_rss(self):
         #self.rssFeed = requests.get('http://backend.deviantart.com/rss.xml?q=boost%3Apopular+cyberpunk') #rss by search
         self.rssFeed = requests.get('http://backend.deviantart.com/rss.xml?q=favby%3ATrissa%2F10465612&type=deviation') #rss by user favorites
         xml_dom = minidom.parseString(self.rssFeed.text)
@@ -31,7 +31,7 @@ class DeviantArt:
             #print(i.Name)
 
 
-    def downloadRSSContent(self):
+    def download_rss_content(self):
         """
         param imageList: list of http strings
         used to download images locally
@@ -51,7 +51,7 @@ class DeviantArt:
                 #use response to get the URL
                 response = requests.get(url)
                 #set the path in which to save the images
-                imgName = self.parseImageURL(url)
+                imgName = self.parse_image_uRL(url)
                 path = r'./images/{}'.format(imgName)
                 #open folder in 'wb' write binary mode
                 fp = open(path, 'wb')
@@ -63,7 +63,7 @@ class DeviantArt:
                 currentImage += 1
 
 
-    def parseImageURL(self, imgURL):
+    def parse_image_uRL(self, imgURL):
         #find the l;ast \ in the url to strip out the image name
         imgIndex = imgURL.rfind('/')
         imgName = imgURL[imgIndex+1:]
@@ -73,4 +73,4 @@ class DeviantArt:
 
 if __name__ == "__main__":
     dev = DeviantArt()
-    dev.getRSS()
+    dev.get_rss()
