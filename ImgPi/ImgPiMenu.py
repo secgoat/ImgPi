@@ -1,7 +1,9 @@
 import pygame
+
+import BaseState
 import Observable
 
-class ImgPiMenuItem():
+class ImgPiMenuItem(BaseState):
 
     def __init__(self, text, font= None, fontSize= 20, fontColor = (255,255,255), posx = 0, posy= 0):
 

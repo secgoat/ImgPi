@@ -1,6 +1,7 @@
 import os
 import pygame
 
+import Emulate
 import ImgPiDisplay
 import ImgPiMenu
 import ImgPiTimer
@@ -80,7 +81,8 @@ class ImgPi():
 
         #now that pygame and display are initialized initiliaze the states and fonts etc.
         self.state['Main'] = ImgPiDisplay.ImgPiDisplay()
-        self.state['Menu'] = ImgPiMenu.ImgPiMenu() # add a menu constructor here
+        self.state['Menu'] = ImgPiMenu.ImgPiMenu(("Images", "NES", "Quit")) # add a menu constructor here
+        self.state['Emulate'] = Emulate.NES()
         self.state['Active'] = self.state['Main']
         self.add_observable(self.state['Menu'].menu_action)
         #self.menuHandler = Observer.Observer(self.state['Menu'].menu_action)
@@ -93,8 +95,10 @@ class ImgPi():
         observable.add_observer(self)
 
     def update(self, observable, *args, **kwargs):
-        if 'Continue' in args:
+        if 'Images' in args:
             self.state['Active'] = self.state['Main']
+        if 'NES' in args:
+            self.state['Active'] = self.state['Emulate']
         if 'Quit' in args:
              pygame.quit()
              self.running = False
