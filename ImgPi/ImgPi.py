@@ -24,7 +24,7 @@ class ImgPi():
         self.deviant = DeviantArt.DeviantArt()
 
         #make gamestate objects so we can set each one to active inactive etc.
-        self.state = {'Active': None, 'Main': None, 'Menu': None} #dict to hold the different gamestate objects
+        self.state = {'Active': None, 'Main': None, 'Menu': None, 'Emulate' : None} #dict to hold the different gamestate objects
         #self.activeState = None #use this to keep track of which state is currently th active and being updated one
 
         #self.menuHandler = None #Observer.Observer()
