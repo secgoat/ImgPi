@@ -125,10 +125,12 @@ class ImgPi():
                         self.state['Active'] = self.state['Menu']
                     else:
                         self.state['Active'] = self.state['Main']
-
-        self.state['Active'].update(time, key)
-        self.state['Active'].draw(self.screen)
-        pygame.display.flip()
+        if len(os.listdir('images')) > 0:
+            self.state['Active'].update(time, key)
+            self.state['Active'].draw(self.screen)
+            pygame.display.flip()
+        else:
+            self.download_images()
 
 
 class MenuHandler():

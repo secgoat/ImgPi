@@ -1,6 +1,5 @@
 import pygame
-
-import BaseState
+from BaseState import BaseState
 import Observable
 
 class ImgPiMenuItem(BaseState):

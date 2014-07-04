@@ -1,7 +1,7 @@
 #import Observable
 
 
-class BaseState():
+class BaseState(object):
 
     def __init__(self):
         self.__observers = []
